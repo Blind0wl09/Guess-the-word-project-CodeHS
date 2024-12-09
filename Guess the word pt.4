@@ -2,7 +2,6 @@ import os
 import random
 import time
 
-# Define ANSI escape codes for custom colors
 class CustomColors:
     PURPLE = '\033[95m'  # Light purple
     ORANGE = '\033[38;5;208m'  # Orange (ANSI 256 color code)
@@ -11,6 +10,13 @@ class CustomColors:
     GREEN = '\033[32m'  # Green
     WHITE = '\033[37m'  # White
     YELLOW = '\033[33m'  # Yellow
+    MAROON = '\033[38;5;88m'  # Maroon
+    GOLD = '\033[38;5;220m'  # Gold (ANSI 256 color code)
+    BLACK = '\033[30m'  # Black
+    BROWN = '\033[38;5;94m'  # Brown (ANSI 256 color code)
+    GRAY = '\033[38;5;8m'  # Gray (ANSI 256 color code)
+    SILVER = '\033[38;5;7m'  # Silver-like gray (ANSI 256 color code)
+    MUSICAL_BLUE = '\033[38;5;32m'  # A variant of blue (musical blue)
     RESET = '\033[0m'  # Reset to default color
 
 # Ansi Escape Code (Non classed)
@@ -32,7 +38,26 @@ words = {
     'lakers': {'conference': 'Western', 'logo': 'A basketball with the word "Lakers"', 'color': CustomColors.YELLOW + CustomColors.PURPLE},
     'knicks': {'conference': 'Eastern', 'logo': 'A basketball with a blue triangle', 'color': CustomColors.ORANGE + CustomColors.BLUE},
     'bucks': {'conference': 'Eastern', 'logo': 'A deer head with antlers', 'color': CustomColors.GREEN},
-    'wizards': {'conference': 'Eastern', 'logo': 'A wizard holding a basketball', 'color': CustomColors.BLUE + CustomColors.RED}
+    'wizards': {'conference': 'Eastern', 'logo': 'A wizard holding a basketball', 'color': CustomColors.BLUE + CustomColors.RED},
+    'warriors': {'conference': 'Western', 'logo': 'A bridge with a basketball', 'color': CustomColors.GOLD + CustomColors.BLUE},
+    'cavaliers': {'conference': 'Eastern', 'logo': 'A sword through a basketball', 'color': CustomColors.MAROON + CustomColors.YELLOW},
+    'heat': {'conference': 'Eastern', 'logo': 'A flaming basketball', 'color': CustomColors.RED + CustomColors.YELLOW},
+    'bulls': {'conference': 'Eastern', 'logo': 'A bull’s head', 'color': CustomColors.RED + CustomColors.BLACK},
+    'pistons': {'conference': 'Eastern', 'logo': 'A piston with a basketball', 'color': CustomColors.BLUE + CustomColors.RED},
+    'jazz': {'conference': 'Western', 'logo': 'A musical note and basketball', 'color': CustomColors.MUSICAL_BLUE + CustomColors.YELLOW},
+    'trailblazers': {'conference': 'Western', 'logo': 'A red and black diagonal stripe', 'color': CustomColors.RED + CustomColors.BLACK},
+    'thunder': {'conference': 'Western', 'logo': 'A basketball inside a lightning bolt', 'color': CustomColors.ORANGE + CustomColors.BLUE},
+    'kings': {'conference': 'Western', 'logo': 'A crown with a basketball', 'color': CustomColors.PURPLE + CustomColors.SILVER},
+    'sixers': {'conference': 'Eastern', 'logo': 'A basketball with stars and the word "Sixers"', 'color': CustomColors.RED + CustomColors.BLUE},
+    'timberwolves': {'conference': 'Western', 'logo': 'A wolf howling at a moon', 'color': CustomColors.GREEN + CustomColors.BLUE},
+    'suns': {'conference': 'Western', 'logo': 'A sun with a basketball', 'color': CustomColors.PURPLE + CustomColors.ORANGE},
+    'pelicans': {'conference': 'Western', 'logo': 'A pelican holding a basketball', 'color': CustomColors.RED + CustomColors.BLUE},
+    'grizzlies': {'conference': 'Western', 'logo': 'A bear’s head', 'color': CustomColors.PURPLE + CustomColors.BROWN},
+    'rockets': {'conference': 'Western', 'logo': 'A rocket flying with a basketball', 'color': CustomColors.RED + CustomColors.GRAY},
+    'pacers': {'conference': 'Eastern', 'logo': 'A yellow and blue "P" with a basketball', 'color': CustomColors.YELLOW + CustomColors.BLUE},
+    'hawks': {'conference': 'Eastern', 'logo': 'A hawk with a basketball', 'color': CustomColors.RED + CustomColors.BLACK},
+    'hornets': {'conference': 'Eastern', 'logo': 'A hornet holding a basketball', 'color': CustomColors.PURPLE + CustomColors.GREEN},
+    'magic': {'conference': 'Eastern', 'logo': 'A basketball with stars', 'color': CustomColors.BLUE + CustomColors.SILVER}
 }
 
 # Function to clear the screen
@@ -56,7 +81,6 @@ def update_dashes(secret_word, dashes, guess):
             result += dashes[i]
     return result
 
-# Function to get the user's guess or provide hints
 def get_guess(dashes, incorrect_guesses_left, conference, logo_hint, logo_color, hint_index, guessed_letters):
     while True:
         print(dashes)
@@ -82,42 +106,28 @@ def get_guess(dashes, incorrect_guesses_left, conference, logo_hint, logo_color,
         if user_guess in guessed_letters:
             print(f"{red}You already guessed that letter!{reset}\n")
             incorrect_guesses_left -= 1
-            if incorrect_guesses_left < 0:  # Prevent going below 0 guesses
-                incorrect_guesses_left = 0
             continue
-
         # Check if the guess is valid
-        if user_guess == '':  # Check if user input is empty
+        if user_guess == '':  # Empty input
             print(f"{red}You must guess something!{reset}\n")
             incorrect_guesses_left -= 1
-            if incorrect_guesses_left < 0:  # Prevent going below 0 guesses
-                incorrect_guesses_left = 0
             continue
-        if len(user_guess) != 1:  # Check if user input is more than one character
+        if len(user_guess) != 1:  # More than one character
             print(f"{red}Your guess must have exactly one character!{reset}\n")
             incorrect_guesses_left -= 1
-            if incorrect_guesses_left < 0:  # Prevent going below 0 guesses
-                incorrect_guesses_left = 0
             continue
-        if user_guess.isdigit():  # Check if user input is a digit
+        if user_guess.isdigit():  # Contains a digit
             print(f"{red}Secret word does not contain any integers!{reset}\n")
             incorrect_guesses_left -= 1
-            if incorrect_guesses_left < 0:  # Prevent going below 0 guesses
-                incorrect_guesses_left = 0
             continue
-        if not user_guess.islower():  # Check if user input is not a lowercase letter
+        if not user_guess.islower():  # Not a lowercase letter
             print(f"{red}Your guess must be a lowercase letter!{reset}\n")
             incorrect_guesses_left -= 1
-            if incorrect_guesses_left < 0:  # Prevent going below 0 guesses
-                incorrect_guesses_left = 0
             continue
-
-        # Add valid guess to guessed_letters
+        # If the guess is valid, add it to guessed_letters and return
         guessed_letters.add(user_guess)
-
-        # Return the valid guess and updated hint index
         return user_guess, hint_index, incorrect_guesses_left
-
+    
 # Function to start a new game
 def restart_game():
     clear_screen()
@@ -134,6 +144,8 @@ def restart_game():
             break
         else:
             print(f"{red}Invalid Input! (Input yes/no){reset}")
+            user_choice = input("> ").lower()
+
 
 # Main game loop
 def start_game():
@@ -143,7 +155,7 @@ def start_game():
     logo_hint = team_info['logo']
     logo_color = team_info['color']
     dashes = '-' * len(secret_word)
-    incorrect_guesses_left = 10
+    incorrect_guesses_left = 15
     hint_index = 0
     guessed_letters = set()  # Track guessed letters
 
@@ -162,6 +174,7 @@ def start_game():
         else:
             # Decrement incorrect guesses only for invalid guesses
             print(f"{red}That letter is not in the word.{reset}\n")
+            incorrect_guesses_left -= 1
 
         # Check if the player has won
         if dashes == secret_word:
@@ -176,7 +189,7 @@ def start_game():
             print(f'{logo_color}Sorry, you ran out of guesses. The secret word was {secret_word}{reset}.')
             time.sleep(2)
             break
-
+        
     restart_game()
 
 # Start the game for the first time
