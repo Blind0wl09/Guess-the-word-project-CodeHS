@@ -1,0 +1,50 @@
+import os
+secret_word = 'owl'
+dashes = '-' * len(secret_word)
+incorrect_guesses_left = 10
+
+os.system('cls')
+
+def update_dashes(secret_word, dashes, guess): 
+    result = ''
+    for i in range(len(secret_word)): 
+        if secret_word[i] == guess:
+            result += guess 
+        else:
+            result += dashes[i]
+    return result
+
+def get_guess(dashes, incorrect_guesses_left):
+    while True:
+        print(dashes)
+        print(f'{incorrect_guesses_left} incorrect guesses left.')
+        user_guess = input("Guess: ")  # get user input
+        if user_guess == '':  # check if user input is empty
+            print("You must guess something!\n")
+            continue
+        if len(user_guess) != 1:  # check if user input is more than one character
+            print("Your guess must have exactly one character!\n")
+            continue
+        if user_guess.isdigit():  # check if user input is a digit
+            print("Secret word does not contain any integers!\n")
+            continue
+        if not user_guess.islower():  # check if user input is not a lowercase letter
+            print("Your guess must be a lowercase letter!\n")
+            continue
+        return user_guess, incorrect_guesses_left
+
+while incorrect_guesses_left > 0:
+    guess, incorrect_guesses_left = get_guess(dashes, incorrect_guesses_left)
+    if guess in secret_word:
+        print("That letter is in the word!")
+        dashes = update_dashes(secret_word, dashes, guess)
+    else:
+        print("That letter is not in the word.")
+        incorrect_guesses_left -= 1
+    if dashes == secret_word:
+        os.system('cls')
+        print(f'Congratulations, you won! The secret word was {secret_word}.')
+        break
+if incorrect_guesses_left == 0:
+    os.system('cls')
+    print(f'Sorry, you ran out of guesses. The secret word was {secret_word}.')
