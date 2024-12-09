@@ -1,0 +1,47 @@
+import os
+secret_word = 'owl'
+dashes = '-' * len(secret_word)
+
+os.system('cls')
+
+def update_dashes(secret_word, dashes, guess): 
+    result = ''
+    for i in range(len(secret_word)): 
+        if secret_word[i] == guess:
+            result += guess 
+        else:
+            result += dashes[i]
+    return result
+
+def get_guess():
+    while True:
+        print(dashes)  # print dashes based on user's guess
+        user_guess = input("Guess: ")  # get user input
+
+        if user_guess == '':  # check if user input is empty
+            print("You must guess something!\n")
+            continue
+        if len(user_guess) != 1:  # check if user input is more than one character
+            print("Your guess must have exactly one character!\n")
+            continue
+        if user_guess.isdigit():  # check if user input is a digit
+            print("Secret word does not contain any integers!\n")
+            continue
+        if not user_guess.islower():  # check if user input is not a lowercase letter
+            print("Your guess must be a lowercase letter!\n")
+            continue
+        
+        return user_guess
+
+# Global dashes variable to track game state
+dashes = '-' * len(secret_word)
+
+# Game loop
+while True:
+    guess = get_guess()
+    
+    if guess in secret_word:
+        print("That letter is in the secret word!\n")
+        dashes = update_dashes(secret_word, dashes, guess)
+    else:
+        print("That letter is not in the secret word!\n")
