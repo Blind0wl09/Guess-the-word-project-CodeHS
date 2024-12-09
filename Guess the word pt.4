@@ -66,16 +66,16 @@ def get_guess(dashes, incorrect_guesses_left, conference, logo_hint, logo_color,
         # Check if the guess is 'hint' and process hints accordingly
         if user_guess == 'hint':
             if hint_index == 0:
-                print(f"{underline}Hint: The secret word is an NBA team name.{reset}")
+                print(f"{underline}Hint: The secret word is an NBA team name.{reset}\n")
                 hint_index = 1
             elif hint_index == 1:
-                print(f"{underline}Hint: The team is in the {conference} Conference.{reset}")
+                print(f"{underline}Hint: The team is in the {conference} Conference.{reset}\n")
                 hint_index = 2
             elif hint_index == 2:
-                print(f"{underline}{logo_color}Hint: The team's logo is {logo_hint}{reset}")
+                print(f"{underline}{logo_color}Hint: The team's logo is {logo_hint}{reset}\n")
                 hint_index = 3
             else:
-                print(f"{red}No more hints available!{reset}")
+                print(f"{red}No more hints available!{reset}\n")
             continue
 
         # Check for repeated guesses
